@@ -1,24 +1,31 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven3'   // Name of Maven configured in Jenkins
+        jdk 'JDK17'      // Name of JDK configured in Jenkins
+    }
+
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying to server..."
-                // Example: copy WAR/JAR to Tomcat or use scp/ssh
+                echo "Deploying application on Windows server..."
+                // Example deploy: copy JAR to folder
+                bat 'copy target\\*.jar C:\\deployments\\myapp\\'
             }
         }
     }
 }
+
